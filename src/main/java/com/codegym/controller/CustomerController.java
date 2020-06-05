@@ -75,8 +75,11 @@ public class CustomerController {
     }
 
     @PostMapping("/delete-customer")
-    public String deleteCustomer(@ModelAttribute("customer") Customer customer){
+    public ModelAndView deleteCustomer(@ModelAttribute("customer") Customer customer){
         customerService.remove(customer.getId());
-        return "customerList";
+        ModelAndView modelAndView = new ModelAndView("customer/customerList");
+        List<Customer> listCustomer = customerService.findAll();
+        modelAndView.addObject("customers", listCustomer);
+        return modelAndView;
     }
 }
