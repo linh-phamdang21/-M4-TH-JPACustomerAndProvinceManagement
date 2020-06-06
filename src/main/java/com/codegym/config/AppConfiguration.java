@@ -1,9 +1,10 @@
 package com.codegym.config;
 
 import com.codegym.repository.CustomerRepository;
-import com.codegym.repository.CustomerRepositoryImpl;
 import com.codegym.service.CustomerServiceImpl;
 import com.codegym.service.ICustomerService;
+import com.codegym.service.IProvinceService;
+import com.codegym.service.ProvinceServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -11,6 +12,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -34,6 +36,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
+@EnableJpaRepositories("com.codegym.repository")
 @ComponentScan("com.codegym.controller")
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
@@ -44,16 +47,17 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         this.applicationContext = applicationContext;
     }
 
-    @Bean
-    public CustomerRepository customerRepository(){
-        return new CustomerRepositoryImpl();
-    }
+
 
     @Bean
     public ICustomerService customerService(){
         return new CustomerServiceImpl();
     }
 
+    @Bean
+    public IProvinceService provinceService() {
+        return new ProvinceServiceImpl();
+    }
 
     //Thymeleaf Configuration
     @Bean

@@ -19,7 +19,7 @@ public class CustomerController {
     @GetMapping
     public ModelAndView showAllCustomer(){
         ModelAndView modelAndView = new ModelAndView("customer/customerList");
-        List<Customer> listCustomer = customerService.findAll();
+        Iterable<Customer> listCustomer = customerService.findAll();
         modelAndView.addObject("customers", listCustomer);
         return modelAndView;
     }
@@ -78,7 +78,7 @@ public class CustomerController {
     public ModelAndView deleteCustomer(@ModelAttribute("customer") Customer customer){
         customerService.remove(customer.getId());
         ModelAndView modelAndView = new ModelAndView("customer/customerList");
-        List<Customer> listCustomer = customerService.findAll();
+        Iterable<Customer> listCustomer = customerService.findAll();
         modelAndView.addObject("customers", listCustomer);
         return modelAndView;
     }
